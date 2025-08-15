@@ -1,9 +1,7 @@
-﻿using Avalonia;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.Styling;
 using Avalonia.Styling;
-
 
 namespace HyperText.Avalonia;
 
@@ -35,7 +33,7 @@ public class HyperLinkStyle : Styles, IResourceProvider, IStyle
     }
 
 
-    public IResourceHost? Owner => (Loaded as IResourceProvider)?.Owner;
+    public new IResourceHost? Owner => (Loaded as IResourceProvider)?.Owner;
 
     /// <summary>
     /// Gets the loaded style.
@@ -55,7 +53,7 @@ public class HyperLinkStyle : Styles, IResourceProvider, IStyle
         }
     }
 
-    public bool TryGetResource(object key, ThemeVariant? theme, out object? value)
+    public new bool TryGetResource(object key, ThemeVariant? theme, out object? value)
     {
         if (!_isLoading && Loaded is IResourceProvider p)
         {
@@ -68,9 +66,9 @@ public class HyperLinkStyle : Styles, IResourceProvider, IStyle
     
 
     bool IResourceNode.HasResources => (Loaded as IResourceProvider)?.HasResources ?? false;
-    IReadOnlyList<IStyle> IStyle.Children => _loaded?.Children ?? Array.Empty<IStyle>();
+    IReadOnlyList<IStyle> IStyle.Children => _loaded?.Children ?? [];
 
-    public event EventHandler OwnerChanged
+    public new event EventHandler? OwnerChanged
     {
         add
         {
@@ -87,10 +85,6 @@ public class HyperLinkStyle : Styles, IResourceProvider, IStyle
             }
         }
     }
-
-
-
-
 
     void IResourceProvider.AddOwner(IResourceHost owner) => (Loaded as IResourceProvider)?.AddOwner(owner);
     void IResourceProvider.RemoveOwner(IResourceHost owner) => (Loaded as IResourceProvider)?.RemoveOwner(owner);
